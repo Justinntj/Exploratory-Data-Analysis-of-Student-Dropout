@@ -1,0 +1,326 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[1]:
+
+
+import pandas as pd
+
+
+# In[2]:
+
+
+pip install pandas
+
+
+# In[3]:
+
+
+import pandas as pd
+
+
+# In[5]:
+
+
+df = pd.read_csv("student-dropout.csv")
+
+
+# In[6]:
+
+
+df.head()   # shows first 5 rows
+df.info()   # shows column types and non-null counts
+
+
+# In[8]:
+
+
+pip install numpy 
+
+
+# In[9]:
+
+
+import numpy as np
+
+
+# In[12]:
+
+
+pip install matplotlib
+
+
+# In[74]:
+
+
+import matplotlib.pyplot as plt
+
+
+# In[15]:
+
+
+pip install seaborn
+
+
+# In[16]:
+
+
+import seaborn as sns
+
+
+# In[17]:
+
+
+df.info()
+df.describe()
+df.isnull().sum()
+
+
+# In[117]:
+
+
+column_names = [ "Marital status", "Application mode", "Application order", "Course", "Daytime/evening attendance", "Previous qualification", "Previous qualification (grade)", 
+    "Nacionality", "Mother's qualification", "Father's qualification", 
+    "Mother's occupation", "Father's occupation", "Admission grade", "Displaced", 
+    "Educational special needs", "Debtor", "Tuition fees up to date", "Gender", 
+    "Scholarship holder", "Age at enrollment", "International", 
+    "Curricular units 1st sem (credited)", "Curricular units 1st sem (enrolled)", 
+    "Curricular units 1st sem (evaluations)", "Curricular units 1st sem (approved)", 
+    "Curricular units 1st sem (grade)", "Curricular units 1st sem (without evaluations)", 
+    "Curricular units 2nd sem (credited)", "Curricular units 2nd sem (enrolled)", 
+    "Curricular units 2nd sem (evaluations)", "Curricular units 2nd sem (approved)", 
+    "Curricular units 2nd sem (grade)", "Curricular units 2nd sem (without evaluations)", 
+    "Unemployment rate", "Inflation rate", "GDP", "Target"]
+
+df = pd.read_csv( "student-dropout.csv", sep=";", names=column_names, skiprows=1)
+
+
+# In[55]:
+
+
+columns_to_convert = ['Marital status', 'Application mode', 'Application order', 'Course']
+df[columns_to_convert] = df[columns_to_convert].astype('int64')
+
+
+# In[56]:
+
+
+df. head()
+
+
+# In[47]:
+
+
+df. tail()
+
+
+# In[48]:
+
+
+df.sample(5)
+
+
+# In[49]:
+
+
+df.shape
+
+
+# In[50]:
+
+
+df.columns
+
+
+# In[51]:
+
+
+df.index
+
+
+# In[52]:
+
+
+df.info()
+
+
+# In[53]:
+
+
+df.dtypes
+
+
+# In[54]:
+
+
+df.describe()
+
+
+# In[64]:
+
+
+df.describe(include='all')
+
+
+# In[65]:
+
+
+df.isnull()
+
+
+# In[70]:
+
+
+df.isnull().sum()
+
+
+# In[67]:
+
+
+df.sum()
+
+
+# In[68]:
+
+
+df.any()
+
+
+# In[69]:
+
+
+df.duplicated()
+
+
+# In[75]:
+
+
+df.duplicated().sum()
+
+
+# In[76]:
+
+
+df = df.drop_duplicates()
+
+
+# In[77]:
+
+
+df.nunique()
+
+
+# In[78]:
+
+
+print("Available columns:", df.columns.tolist())
+
+
+# In[79]:
+
+
+df['marital status'].unique()
+
+
+# In[80]:
+
+
+df['target'].value_counts()
+
+
+# In[81]:
+
+
+df.mean(numeric_only=True)
+
+
+# In[82]:
+
+
+df.median(numeric_only=True)
+
+
+# In[83]:
+
+
+df.mode()
+
+
+# In[84]:
+
+
+df.std(numeric_only=True)
+
+
+# In[85]:
+
+
+df.var(numeric_only=True)
+
+
+# In[86]:
+
+
+df.min(numeric_only=True)
+
+
+# In[87]:
+
+
+df.max(numeric_only=True)
+
+
+# In[88]:
+
+
+df.quantile([0.25,0.50,0.75],numeric_only=True)
+
+
+# In[89]:
+
+
+df.sort_values(by='marital status',ascending=False)
+
+
+# In[115]:
+
+
+plt.figure(figsize=(6,4))
+sns.histplot(df['unemployment rate'], discrete=True) 
+plt.title('Unemployment Rate Distribution')
+plt.xlabel('Unemployment Rate (%)')
+plt.ylabel('Frequency')
+plt.show()
+
+
+# In[116]:
+
+
+plt.figure(figsize=(6,4))
+sns.kdeplot(df['inflation rate'])
+plt.title('KDE Plot of inflation rate')
+plt.xlabel('inflation rate')
+plt.ylabel('frequency')
+plt.show()
+
+
+# In[112]:
+
+
+plt.figure(figsize=(8, 5))
+
+# Shows the count of students for each marital status, split by graduation target
+sns.countplot(x='marital status', hue='target', data=df, palette='Set2')
+
+plt.title('Student Outcomes by Marital Status')
+plt.xlabel('Marital Status Code')
+plt.ylabel('Number of Students')
+plt.legend(title='Outcome')
+plt.show()
+
+
+# In[ ]:
+
+
+
+
